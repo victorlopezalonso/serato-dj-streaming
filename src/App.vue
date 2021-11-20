@@ -1,22 +1,35 @@
 <template>
-  <HelloWorld
-    title="Hello there"
-    msg="Vue3 + Electron + TailwindsCSS + DaisyUI."
-  />
+  <navbar @tab-changed="changeTab" />
+  <home v-if="tab === 'home'" />
+  <templates v-if="tab === 'templates'" />
+  <settings v-if="tab === 'settings'" />
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Navbar from "./components/Navbar.vue";
+import Home from "./views/Home.vue";
+import Templates from "./views/Templates.vue";
+import Settings from "./views/Settings.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Navbar,
+    Home,
+    Templates,
+    Settings,
   },
   data() {
-    return {};
+    return {
+      tab: "home",
+    };
   },
-  methods: {},
+  methods: {
+    changeTab(tab) {
+      this.tab = tab;
+      console.log(tab);
+    },
+  },
 };
 </script>
 

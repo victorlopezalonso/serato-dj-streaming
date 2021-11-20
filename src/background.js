@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, screen } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -12,10 +12,13 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  const initialWidth = 750;
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: initialWidth,
+    height: height,
+    minWidth: initialWidth,
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -36,6 +39,7 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+  win.setPosition(width - initialWidth, 0)
 }
 
 // Quit when all windows are closed.
