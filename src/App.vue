@@ -27,7 +27,6 @@ export default {
   methods: {
     changeTab(tab) {
       this.tab = tab;
-      console.log(tab);
     },
   },
 };

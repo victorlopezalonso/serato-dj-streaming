@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     changeTo(tab) {
-      this.selectedTab = tab.id;
+      this.selectedTab = tab;
       this.$emit("tab-changed", tab);
     },
   },
