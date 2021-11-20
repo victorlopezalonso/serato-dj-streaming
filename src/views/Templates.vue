@@ -1,6 +1,6 @@
 <template>
   <div class="shadow-2xl m-2 p-2 rounded-box">
-    <create-template />
+    <create-template @template-created="createTemplate" />
     <update-template
       v-if="template"
       :template="template"
@@ -80,6 +80,14 @@ export default {
     editTemplate(template) {
       this.template = template;
       window.location = "/components/modal#update-template";
+    },
+    createTemplate(template) {
+      const lastId = this.templates.sort((a, b) => b.id - a.id)[0].id;
+
+      this.templates.push({
+        id: lastId + 1,
+        ...template,
+      });
     },
     updateTemplate(template) {
       console.log(template);
