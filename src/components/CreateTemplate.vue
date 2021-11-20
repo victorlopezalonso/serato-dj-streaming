@@ -48,7 +48,7 @@
       </div>
       <div class="modal-action">
         <div @click="createTemplate" class="btn btn-primary">Accept</div>
-        <a href="/components/modal#" class="btn">Close</a>
+        <a @click="close" class="btn">Close</a>
       </div>
     </div>
   </div>
@@ -63,11 +63,18 @@ export default {
   emits: ["template-created"],
   data() {
     return {
-      template: { title: null, description: null, tags: null },
+      template: {},
       showWarning: false,
     };
   },
+  mounted() {
+    this.clearTemplate();
+  },
   methods: {
+    clearTemplate() {
+      this.showWarning = false;
+      this.template = { title: null, description: null, tags: null };
+    },
     createTemplate() {
       if (hasMissingProperties(this.template)) {
         this.showWarning = true;
@@ -76,6 +83,11 @@ export default {
 
       this.showWarning = false;
       this.$emit("template-created", this.template);
+      this.clearTemplate();
+      window.location = "/components/modal#";
+    },
+    close() {
+      this.clearTemplate();
       window.location = "/components/modal#";
     },
   },

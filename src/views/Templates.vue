@@ -5,6 +5,8 @@
       v-if="template"
       :template="template"
       @template-updated="updateTemplate"
+      @template-deleted="deleteTemplate"
+      @modal-closed="clearTemplate"
     />
     <div class="overflow-y-scroll h-screen">
       <div
@@ -79,10 +81,17 @@ export default {
     },
     editTemplate(template) {
       this.template = template;
-      window.location = "/components/modal#update-template";
+      // setTimeout(() => {
+      //   window.location = "/components/modal#update-template";
+      // }, 300);
+    },
+    clearTemplate() {
+      this.template = null;
     },
     createTemplate(template) {
-      const lastId = this.templates.sort((a, b) => b.id - a.id)[0].id;
+      const lastId = this.templates.length
+        ? this.templates.sort((a, b) => b.id - a.id)[0].id
+        : 1;
 
       this.templates.push({
         id: lastId + 1,
@@ -98,6 +107,14 @@ export default {
 
         return t;
       });
+
+      this.clearTemplate();
+    },
+    deleteTemplate(template) {
+      console.log("delete this template");
+      console.log(template);
+      this.templates = this.templates.filter((t) => t.id !== template.id);
+      this.clearTemplate();
     },
   },
 };
