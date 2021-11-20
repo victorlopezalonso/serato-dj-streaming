@@ -1,6 +1,17 @@
-# vue3-electron
+# Serato Streaming
 
-This is a template to develop `Electron` apps using `Vue3` + `TailwindCSS` + `DaisyUI`
+If you are a streamer using `Serato DJ` you can use this app to show information about your streaming in every streaming software like `OBS` or `StreamLabs`.
+
+The app creates txt files inside one directory of your choice so you can load them into your favorite streaming app as independent text sources.
+
+- `title.txt`: Display the title of the stream.
+- `description.txt`: Display a description
+- `tags.txt`: Display a list of tags
+- `serato-now-playing.txt`: Display the current track playing on Serato DJ (requires Serato live playlists).
+
+## Boring part for developers
+
+This project was made from [vue3-electron](https://github.com/victorlopezalonso/vue3-electron).
 
 ### Project setup
 

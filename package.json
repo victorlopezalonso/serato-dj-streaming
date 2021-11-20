@@ -1,7 +1,8 @@
 {
-  "name": "vue3-electron",
-  "version": "0.1.7",
+  "name": "serato-obs",
+  "version": "0.0.1",
   "author": "Víctor López Alonso",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
