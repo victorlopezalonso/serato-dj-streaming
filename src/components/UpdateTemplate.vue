@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="modal-action">
+      <div v-if="!showDeleteWarning" class="modal-action">
         <div @click="showDelete" class="btn btn-secondary">Delete</div>
         <div @click="updateTemplate" class="btn btn-primary">Accept</div>
         <a @click="close" class="btn">Close</a>
@@ -46,14 +46,15 @@
       <div v-if="showDeleteWarning" class="alert mt-4">
         <div class="flex-1">
           <label class="mx-3">
-            Are you sure you want to delete this template?</label
-          >
+            <ExclamationIcon class="w-8 inline-block" />
+            Are you sure you want to delete this template?
+          </label>
         </div>
         <div class="flex-none">
           <button @click="hideDelete" class="btn btn-sm btn-ghost mr-2">
             Cancel
           </button>
-          <button @click="deleteTemplate" class="btn btn-sm btn-accent">
+          <button @click="deleteTemplate" class="btn btn-sm btn-primary">
             Delete
           </button>
         </div>
@@ -64,8 +65,10 @@
 
 <script>
 import { copy } from "./../lib/strings";
+import { ExclamationIcon } from "@heroicons/vue/solid";
 
 export default {
+  components: { ExclamationIcon },
   props: {
     template: Object,
   },
