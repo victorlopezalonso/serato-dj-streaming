@@ -1,16 +1,6 @@
 <template>
-  <div class="shadow-2xl m-2 p-2 rounded-box">
-    <!-- username -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text text-lg font-semibold">Serato Username</span>
-      </label>
-      <input
-        type="text"
-        :value="username"
-        class="input input-bordered text-lg"
-      />
-    </div>
+  <div class="app-container">
+    <bordered-input title="Serato Username" v-model="username" />
 
     <div class="alert-info mt-2 mb-2 flex items-center rounded-box">
       <div class="p-6">
@@ -36,17 +26,7 @@
       </div>
     </div>
 
-    <!-- files location -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text text-lg font-semibold">Files location</span>
-      </label>
-      <input
-        type="text"
-        :value="filesLocation"
-        class="input input-bordered text-lg"
-      />
-    </div>
+    <bordered-input title="Files location" v-model="filesLocation" />
 
     <div class="alert-warning mt-2 mb-2 flex items-center rounded-box">
       <div class="p-6">
@@ -71,9 +51,10 @@
 
 <script>
 import { UserCircleIcon, FolderIcon } from "@heroicons/vue/solid";
+import BorderedInput from "../components/inputs/BorderedInput.vue";
 
 export default {
-  components: { UserCircleIcon, FolderIcon },
+  components: { UserCircleIcon, FolderIcon, BorderedInput },
   data() {
     return {
       username: "Carl Cox",

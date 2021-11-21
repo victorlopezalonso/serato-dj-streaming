@@ -1,34 +1,15 @@
 <template>
-  <div class="shadow-2xl m-2 p-2 rounded-box">
-    <!-- username -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text text-lg font-semibold">Serato Username</span>
-      </label>
-      <input
-        type="text"
-        disabled="disabled"
-        :value="username"
-        class="input input-bordered text-lg"
-      />
-    </div>
-    <!-- files location -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text text-lg font-semibold">Files location</span>
-      </label>
-      <input
-        type="text"
-        disabled="disabled"
-        :value="filesLocation"
-        class="input input-bordered text-lg"
-      />
-    </div>
+  <div class="app-container">
+    <bordered-input title="Serato Username" v-model="username" />
+    <bordered-input title="Files location" v-model="filesLocation" />
   </div>
 </template>
 
 <script>
+import BorderedInput from "./inputs/BorderedInput.vue";
+
 export default {
+  components: { BorderedInput },
   data() {
     return {
       username: "Carl Cox",

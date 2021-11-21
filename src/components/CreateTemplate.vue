@@ -6,39 +6,13 @@
   <div id="create-template" class="modal">
     <div class="modal-box bg-gray-900">
       <div class="rounded-box">
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-lg">Title</span>
-          </label>
-          <input
-            type="text"
-            placeholder="title"
-            class="input text-lg font-medium"
-            v-model="template.title"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-lg">Description</span>
-          </label>
-          <textarea
-            type="text"
-            placeholder="description"
-            class="textarea text-lg h-40 font-medium"
-            v-model="template.description"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-lg">Tags</span>
-          </label>
-          <input
-            type="text"
-            placeholder="tags"
-            class="input text-lg font-medium"
-            v-model="template.tags"
-          />
-        </div>
+        <bordered-input title="Title" v-model="template.title" />
+        <bordered-input
+          textArea
+          title="Description"
+          v-model="template.description"
+        />
+        <bordered-input title="Tags" v-model="template.tags" />
       </div>
       <div v-if="showWarning" class="alert alert-error mt-8">
         <div class="flex-1">
@@ -57,9 +31,10 @@
 <script>
 import { ExclamationIcon, PlusCircleIcon } from "@heroicons/vue/solid";
 import { hasMissingProperties } from "../lib/strings";
+import BorderedInput from "./inputs/BorderedInput.vue";
 
 export default {
-  components: { ExclamationIcon, PlusCircleIcon },
+  components: { ExclamationIcon, PlusCircleIcon, BorderedInput },
   emits: ["template-created"],
   data() {
     return {
@@ -93,5 +68,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

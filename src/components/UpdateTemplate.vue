@@ -2,39 +2,13 @@
   <div id="update-template" class="modal modal-open">
     <div class="modal-box bg-gray-900">
       <div class="rounded-box">
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-lg">Title</span>
-          </label>
-          <input
-            type="text"
-            placeholder="title"
-            class="input text-lg font-medium"
-            v-model="updatedTemplate.title"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-lg">Description</span>
-          </label>
-          <textarea
-            type="text"
-            placeholder="description"
-            class="textarea text-lg h-40 font-medium"
-            v-model="updatedTemplate.description"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-lg">Tags</span>
-          </label>
-          <input
-            type="text"
-            placeholder="tags"
-            class="input text-lg font-medium"
-            v-model="updatedTemplate.tags"
-          />
-        </div>
+        <bordered-input title="Title" v-model="updatedTemplate.title" />
+        <bordered-input
+          textArea
+          title="Description"
+          v-model="updatedTemplate.description"
+        />
+        <bordered-input title="Tags" v-model="updatedTemplate.tags" />
       </div>
 
       <div v-if="!showDeleteWarning" class="modal-action">
@@ -66,9 +40,10 @@
 <script>
 import { copy } from "./../lib/strings";
 import { ExclamationIcon } from "@heroicons/vue/solid";
+import BorderedInput from "./inputs/BorderedInput.vue";
 
 export default {
-  components: { ExclamationIcon },
+  components: { ExclamationIcon, BorderedInput },
   props: {
     template: Object,
   },
