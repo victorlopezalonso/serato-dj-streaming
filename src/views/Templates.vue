@@ -81,9 +81,6 @@ export default {
     },
     editTemplate(template) {
       this.template = template;
-      // setTimeout(() => {
-      //   window.location = "/components/modal#update-template";
-      // }, 300);
     },
     clearTemplate() {
       this.template = null;

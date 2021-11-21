@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, screen } from 'electron'
+import { app, protocol, BrowserWindow, screen, shell } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -30,6 +30,7 @@ async function createWindow() {
     }
   })
 
+  win.setPosition(width - initialWidth, 0)
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -39,7 +40,10 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-  win.setPosition(width - initialWidth, 0)
+  win.webContents.on('new-window', function(e, url) {
+    e.preventDefault();
+    shell.openExternal(url);
+  });
 }
 
 // Quit when all windows are closed.

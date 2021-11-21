@@ -23,11 +23,13 @@
         </h4>
         <span class="text-sm text-base-content text-opacity-60 font-medium">
           Log in into your Serato account and visit
-          <strong>
-            <a class="link link-accent" href="https://serato.com/yourplaylists">
-              Serato playlists
-            </a>
-          </strong>
+          <a
+            class="link link-accent font-bold"
+            href="https://serato.com/yourplaylists"
+            target="_blank"
+          >
+            Serato playlists
+          </a>
           then open one of your playlists and grab the username added to the URL
           after <strong>https://serato.com/playlists/</strong>
         </span>

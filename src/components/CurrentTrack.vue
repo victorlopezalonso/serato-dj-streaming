@@ -7,7 +7,7 @@
           <input
             type="radio"
             name="opt"
-            class="radio"
+            class="radio border-2"
             :class="type.class"
             :value="type.value"
             v-model="exportType"
@@ -47,30 +47,54 @@
       </div>
     </div>
 
-    <div v-if="currentTrack" class="alert mt-4">
-      <div class="flex-1">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="#2196f3"
-          class="w-6 h-6 mx-2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-        <label>Current track: {{ currentTrack }}</label>
+    <div class="pl-4 pr-4 pt-2 pb-2 card border-2 border-gray-500 mt-4">
+      <div class="form-control">
+        <label class="cursor-pointer label">
+          <span class="label-text font-medium text-lg">
+            Export filename using uppercase
+          </span>
+          <input
+            type="checkbox"
+            :checked="exportUsingUppercase"
+            class="toggle toggle-accent border-2"
+            @click="exportUsingUppercase = !exportUsingUppercase"
+          />
+        </label>
       </div>
+    </div>
+
+    <div v-if="currentTrack" class="alert mt-4">
+      <div class="flex-1 items-center">
+        <InformationCircleIcon class="w-8 mr-2" />
+        <label class="font-medium">
+          Current track:
+          <span
+            :class="{
+              'text-green-500': isManual,
+              'text-purple-400': isAutomatic,
+            }"
+            >{{ currentTrack }}</span
+          >
+        </label>
+      </div>
+    </div>
+
+    <div
+      v-if="listening"
+      class="p-4 mt-4 w-full text-right flex items-center justify-end"
+    >
+      <label class="font-medium"> Seconds to reload the track </label>
+      <span class="font-mono text-6xl countdown">
+        <span :style="`--value: ${countdown}`"></span>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+import { InformationCircleIcon } from "@heroicons/vue/solid";
 export default {
+  components: { InformationCircleIcon },
   data() {
     return {
       listening: false,
@@ -85,6 +109,9 @@ export default {
         },
         { value: "manual", class: "radio-accent", name: "Manual Input" },
       ],
+      exportUsingUppercase: true,
+      countdown: 20,
+      interval: null,
     };
   },
   computed: {
@@ -97,21 +124,30 @@ export default {
         ? this.seratoTrack
         : this.manualTrack;
     },
+    isManual() {
+      return this.exportType === "manual";
+    },
+    isAutomatic() {
+      return this.exportType === "automatic";
+    },
   },
   methods: {
     checkIsManual() {
       this.manualTrack = null;
+      this.stop();
       setTimeout(() => {
         this.exportType === "manual" && this.$refs.manualInput.focus();
       }, 300);
     },
     listen() {
+      this.countdown = 20;
       this.listening = true;
       this.seratoTrack = "Track from - Serato Live Playlists";
     },
     stop() {
       this.listening = false;
       this.seratoTrack = null;
+      this.interval = null;
     },
     saveManualTrack() {
       this.manualTrack = this.$refs.manualInput.value;
