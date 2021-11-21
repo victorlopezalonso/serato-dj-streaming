@@ -3,7 +3,7 @@
     <!-- username -->
     <div class="form-control">
       <label class="label">
-        <span class="label-text text-lg font-semibold">Username</span>
+        <span class="label-text text-lg font-semibold">Serato Username</span>
       </label>
       <input
         type="text"
