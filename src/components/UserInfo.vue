@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <InputWithTitle title="Serato Username" v-model="username" />
-    <InputWithTitle title="Files location" v-model="filesLocation" />
+    <InputWithTitle title="Serato Username" v-model="username" disabled />
+    <InputWithTitle title="Files location" v-model="filesLocation" disabled />
   </div>
 </template>
 

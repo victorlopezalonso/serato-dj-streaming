@@ -47,37 +47,22 @@
       </div>
     </div>
 
-    <div class="pl-4 pr-4 pt-2 pb-2 card border-2 border-gray-500 mt-4">
-      <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text font-medium text-lg">
-            Export filename using uppercase
-          </span>
-          <input
-            type="checkbox"
-            :checked="exportUsingUppercase"
-            class="toggle toggle-accent border-2"
-            @click="exportUsingUppercase = !exportUsingUppercase"
-          />
-        </label>
-      </div>
-    </div>
+    <Switch
+      text="Export filename using uppercase"
+      :checked="exportUsingUppercase"
+      @switch:changed="toggleExportUsingUppercase"
+    />
 
-    <div v-if="currentTrack" class="alert mt-4">
-      <div class="flex-1 items-center">
-        <InformationCircleIcon class="w-8 mr-2" />
-        <label class="font-medium">
-          Current track:
-          <span
-            :class="{
-              'text-green-500': isManual,
-              'text-purple-400': isAutomatic,
-            }"
-            >{{ currentTrack }}</span
-          >
-        </label>
-      </div>
-    </div>
+    <BoxAlert v-if="currentTrack">
+      Current track:
+      <span
+        :class="{
+          'text-green-500': isManual,
+          'text-purple-400': isAutomatic,
+        }"
+        >{{ currentTrack }}</span
+      >
+    </BoxAlert>
 
     <div
       v-if="listening"
@@ -92,9 +77,10 @@
 </template>
 
 <script>
-import { InformationCircleIcon } from "@heroicons/vue/solid";
+import BoxAlert from "./containers/BoxAlert.vue";
+import Switch from "./inputs/Switch.vue";
 export default {
-  components: { InformationCircleIcon },
+  components: { Switch, BoxAlert },
   data() {
     return {
       listening: false,
@@ -132,6 +118,9 @@ export default {
     },
   },
   methods: {
+    toggleExportUsingUppercase() {
+      this.exportUsingUppercase = !this.exportUsingUppercase;
+    },
     checkIsManual() {
       this.manualTrack = null;
       this.stop();
