@@ -1,59 +1,29 @@
 <template>
   <div class="app-container">
-    <create-template @template-created="createTemplate" />
-    <update-template
+    <CreateTemplate @template-created="createTemplate" />
+    <UpdateTemplate
       v-if="template"
       :template="template"
       @template-updated="updateTemplate"
       @template-deleted="deleteTemplate"
       @modal-closed="clearTemplate"
     />
-    <div class="overflow-y-scroll h-screen">
-      <div
-        class="
-          card
-          lg:card-side
-          border-2 border-gray-500
-          mt-2
-          cursor-pointer
-          hover:bg-gray-800
-        "
-        v-for="(template, key) in templates"
-        :key="key"
-        @click="editTemplate(template)"
-      >
-        <div class="card-body">
-          <div
-            data-tip="click to edit"
-            class="tooltip tooltip-bottom tooltip-secondary text-left"
-          >
-            <h2 class="card-title">
-              <span data-tip="hello" class="tooltip">
-                <PencilAltIcon class="inline-block w-4 mr-2" />{{
-                  template.title
-                }}
-              </span>
-            </h2>
-            <p>
-              {{ template.description }}
-            </p>
-            <div class="badge badge-primary mt-3">
-              {{ template.tags }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Template
+      v-for="(template, key) in templates"
+      :key="key"
+      :template="template"
+      @template:clicked="editTemplate"
+    />
   </div>
 </template>
 
 <script>
 import CreateTemplate from "../components/CreateTemplate.vue";
-import { PencilAltIcon } from "@heroicons/vue/solid";
 import UpdateTemplate from "../components/UpdateTemplate.vue";
+import Template from "../components/containers/Template.vue";
 
 export default {
-  components: { CreateTemplate, UpdateTemplate, PencilAltIcon },
+  components: { CreateTemplate, UpdateTemplate, Template },
   data() {
     return {
       template: null,
@@ -76,9 +46,6 @@ export default {
     };
   },
   methods: {
-    getSeparatedTags(tags) {
-      return tags.split(" ");
-    },
     editTemplate(template) {
       this.template = template;
     },
@@ -108,8 +75,6 @@ export default {
       this.clearTemplate();
     },
     deleteTemplate(template) {
-      console.log("delete this template");
-      console.log(template);
       this.templates = this.templates.filter((t) => t.id !== template.id);
       this.clearTemplate();
     },
