@@ -2,13 +2,13 @@
   <div id="update-template" class="modal modal-open">
     <div class="modal-box bg-gray-900">
       <div class="rounded-box">
-        <bordered-input title="Title" v-model="updatedTemplate.title" />
-        <bordered-input
+        <InputWithTitle title="Title" v-model="updatedTemplate.title" />
+        <InputWithTitle
           textArea
           title="Description"
           v-model="updatedTemplate.description"
         />
-        <bordered-input title="Tags" v-model="updatedTemplate.tags" />
+        <InputWithTitle title="Tags" v-model="updatedTemplate.tags" />
       </div>
 
       <div v-if="!showDeleteWarning" class="modal-action">
@@ -40,10 +40,10 @@
 <script>
 import { copy } from "./../lib/strings";
 import { ExclamationIcon } from "@heroicons/vue/solid";
-import BorderedInput from "./inputs/BorderedInput.vue";
+import InputWithTitle from "./inputs/InputWithTitle.vue";
 
 export default {
-  components: { ExclamationIcon, BorderedInput },
+  components: { ExclamationIcon, InputWithTitle },
   props: {
     template: Object,
   },

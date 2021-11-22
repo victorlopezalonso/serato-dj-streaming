@@ -1,15 +1,15 @@
 <template>
   <div class="app-container">
-    <bordered-input title="Serato Username" v-model="username" />
-    <bordered-input title="Files location" v-model="filesLocation" />
+    <InputWithTitle title="Serato Username" v-model="username" />
+    <InputWithTitle title="Files location" v-model="filesLocation" />
   </div>
 </template>
 
 <script>
-import BorderedInput from "./inputs/BorderedInput.vue";
+import InputWithTitle from "./inputs/InputWithTitle.vue";
 
 export default {
-  components: { BorderedInput },
+  components: { InputWithTitle },
   data() {
     return {
       username: "Carl Cox",

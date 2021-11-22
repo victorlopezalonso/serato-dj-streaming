@@ -6,13 +6,13 @@
   <div id="create-template" class="modal">
     <div class="modal-box bg-gray-900">
       <div class="rounded-box">
-        <bordered-input title="Title" v-model="template.title" />
-        <bordered-input
+        <InputWithTitle title="Title" v-model="template.title" />
+        <InputWithTitle
           textArea
           title="Description"
           v-model="template.description"
         />
-        <bordered-input title="Tags" v-model="template.tags" />
+        <InputWithTitle title="Tags" v-model="template.tags" />
       </div>
       <div v-if="showWarning" class="alert alert-error mt-8">
         <div class="flex-1">
@@ -31,10 +31,10 @@
 <script>
 import { ExclamationIcon, PlusCircleIcon } from "@heroicons/vue/solid";
 import { hasMissingProperties } from "../lib/strings";
-import BorderedInput from "./inputs/BorderedInput.vue";
+import InputWithTitle from "./inputs/InputWithTitle.vue";
 
 export default {
-  components: { ExclamationIcon, PlusCircleIcon, BorderedInput },
+  components: { ExclamationIcon, PlusCircleIcon, InputWithTitle },
   emits: ["template-created"],
   data() {
     return {

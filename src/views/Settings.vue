@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <bordered-input title="Serato Username" v-model="username" disabled />
+    <InputWithTitle title="Serato Username" v-model="username" disabled />
     <alert>
       <template v-slot:icon>
         <UserCircleIcon class="w-8" />
@@ -23,7 +23,7 @@
       </template>
     </alert>
 
-    <bordered-input title="Files location" v-model="filesLocation" disabled />
+    <InputWithTitle title="Files location" v-model="filesLocation" disabled />
 
     <alert type="alert-warning">
       <template v-slot:icon>
@@ -51,11 +51,11 @@
 
 <script>
 import { UserCircleIcon, FolderIcon } from "@heroicons/vue/solid";
-import BorderedInput from "../components/inputs/BorderedInput.vue";
+import InputWithTitle from "../components/inputs/InputWithTitle.vue";
 import Alert from "../components/containers/Alert.vue";
 
 export default {
-  components: { UserCircleIcon, FolderIcon, BorderedInput, Alert },
+  components: { UserCircleIcon, FolderIcon, InputWithTitle, Alert },
   data() {
     return {
       username: "Carl Cox",
