@@ -8,6 +8,7 @@
       v-if="!textArea"
       type="text"
       :value="modelValue"
+      :disabled="disabled"
       class="input input-bordered text-lg"
       @input="$emit('update:modelValue', $event.target.value)"
     />
@@ -16,6 +17,7 @@
       v-if="textArea"
       type="text"
       :value="modelValue"
+      :disabled="disabled"
       class="textarea text-lg h-40 font-medium"
       @input="$emit('update:modelValue', $event.target.value)"
     />
@@ -27,6 +29,7 @@ export default {
   props: {
     title: String,
     textArea: Boolean,
+    disabled: Boolean,
     modelValue: String,
   },
   emits: ["update:modelValue"],
