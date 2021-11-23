@@ -66,12 +66,12 @@ export default {
     },
     updateTemplate() {
       this.$emit("template-updated", this.updatedTemplate);
-      window.location = "/components/modal#";
+      this.$emit("modal-closed");
     },
     deleteTemplate() {
       this.hideDelete();
       this.$emit("template-deleted", this.updatedTemplate);
-      window.location = "/components/modal#";
+      this.$emit("modal-closed");
     },
     close() {
       this.$emit("modal-closed");

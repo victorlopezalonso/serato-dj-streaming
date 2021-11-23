@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <InputWithTitle title="Serato Username" v-model="username" disabled />
+    <InputWithTitle title="Serato Username" v-model="username" />
     <alert>
       <template v-slot:icon>
         <UserCircleIcon class="w-8" />
@@ -23,7 +23,7 @@
       </template>
     </alert>
 
-    <InputWithTitle title="Files location" v-model="filesLocation" disabled />
+    <InputWithTitle title="Files location" v-model="filesLocation" />
 
     <alert type="alert-warning">
       <template v-slot:icon>
