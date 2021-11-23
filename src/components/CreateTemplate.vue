@@ -1,9 +1,5 @@
 <template>
-  <a href="/components/modal#create-template" class="btn btn-primary btn-block">
-    <PlusCircleIcon class="w-8 mr-2" />
-    New Template
-  </a>
-  <div id="create-template" class="modal">
+  <div id="create-template" class="modal modal-open">
     <div class="modal-box bg-gray-900">
       <div class="rounded-box">
         <InputWithTitle title="Title" v-model="template.title" />
@@ -29,13 +25,13 @@
 </template>
 
 <script>
-import { ExclamationIcon, PlusCircleIcon } from "@heroicons/vue/solid";
+import { ExclamationIcon } from "@heroicons/vue/solid";
 import { hasMissingProperties } from "../lib/strings";
 import InputWithTitle from "./inputs/InputWithTitle.vue";
 
 export default {
-  components: { ExclamationIcon, PlusCircleIcon, InputWithTitle },
-  emits: ["template-created"],
+  components: { ExclamationIcon, InputWithTitle },
+  emits: ["template-created", "modal-closed"],
   data() {
     return {
       template: {},
@@ -59,11 +55,11 @@ export default {
       this.showWarning = false;
       this.$emit("template-created", this.template);
       this.clearTemplate();
-      window.location = "/components/modal#";
+      this.$emit("modal-closed");
     },
     close() {
       this.clearTemplate();
-      window.location = "/components/modal#";
+      this.$emit("modal-closed");
     },
   },
 };

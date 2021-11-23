@@ -47,7 +47,7 @@ export default {
   props: {
     template: Object,
   },
-  emits: ["template-created", "template-deleted", "modal-closed"],
+  emits: ["template-updated", "template-deleted", "modal-closed"],
   data() {
     return {
       showDeleteWarning: false,

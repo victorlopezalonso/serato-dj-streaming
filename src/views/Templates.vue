@@ -1,6 +1,17 @@
 <template>
   <div class="app-container">
-    <CreateTemplate @template-created="createTemplate" />
+    <button
+      class="btn btn-primary btn-block"
+      @click="handleShowCreateTemplateModal"
+    >
+      <PlusCircleIcon class="w-8 mr-2" />
+      New Template
+    </button>
+    <CreateTemplate
+      v-if="showCreateTemplateModal"
+      @template-created="createTemplate"
+      @modal-closed="handleHideCreateTemplateModal"
+    />
     <UpdateTemplate
       v-if="template"
       :template="template"
@@ -18,15 +29,17 @@
 </template>
 
 <script>
+import { PlusCircleIcon } from "@heroicons/vue/solid";
 import CreateTemplate from "../components/CreateTemplate.vue";
 import UpdateTemplate from "../components/UpdateTemplate.vue";
 import Template from "../components/containers/Template.vue";
 
 export default {
-  components: { CreateTemplate, UpdateTemplate, Template },
+  components: { CreateTemplate, UpdateTemplate, Template, PlusCircleIcon },
   data() {
     return {
       template: null,
+      showCreateTemplateModal: false,
       templates: [
         {
           id: 1,
@@ -51,6 +64,12 @@ export default {
     },
     clearTemplate() {
       this.template = null;
+    },
+    handleShowCreateTemplateModal() {
+      this.showCreateTemplateModal = true;
+    },
+    handleHideCreateTemplateModal() {
+      this.showCreateTemplateModal = false;
     },
     createTemplate(template) {
       const lastId = this.templates.length
