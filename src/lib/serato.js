@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const getLastTrackFromPlaylist = async (/*username*/) => axios
-// .get(`https://serato.com/playlists/${username}/live`)
-    .get('https://serato.com/playlists/Vla_DSound/16-11-21')
+const getLastTrackFromPlaylist = async (username) => axios
+    .get(`https://serato.com/playlists/${username}/live`)
     .then((response) => {
       const wrapper = document.createElement("div");
       wrapper.innerHTML = response.data;
