@@ -33,12 +33,13 @@
         <div class="relative">
           <input
             ref="manualInput"
+            v-model="manualTrack"
             type="text"
             placeholder="Write down the trackname"
             class="w-full pr-16 input input-accent input-bordered text-lg"
           />
           <button
-            @click="saveManualTrack"
+            @click="updateCurrentTrack"
             class="absolute top-0 right-0 rounded-l-none btn btn-accent"
           >
             Save
@@ -80,6 +81,9 @@
 import storage from "../lib/storage";
 import BoxAlert from "./containers/BoxAlert.vue";
 import Switch from "./inputs/Switch.vue";
+import { getLastTrackFromPlaylist } from "../lib/serato";
+import { writeFile } from "../lib/filesystem";
+
 export default {
   components: { Switch, BoxAlert },
   data() {
@@ -87,6 +91,7 @@ export default {
       listening: false,
       seratoTrack: null,
       manualTrack: null,
+      currentTrack: null,
       exportType: "automatic",
       exportTypes: [
         {
@@ -97,25 +102,13 @@ export default {
         { value: "manual", class: "radio-accent", name: "Manual Input" },
       ],
       exportUsingUppercase: storage.getExportInUppercase(),
-      countdown: 20,
+      countdown: null,
+      countdownInterval: null,
       interval: null,
+      intervalTime: storage.getIntervalTimeInMilliseconds(),
     };
   },
-  watch: {
-    exportUsingUppercase(value) {
-      storage.setExportInUppercase(value);
-    },
-  },
   computed: {
-    currentTrack() {
-      if (!this.seratoTrack && !this.manualTrack) {
-        return null;
-      }
-
-      return this.exportType === "automatic"
-        ? this.seratoTrack
-        : this.manualTrack;
-    },
     isManual() {
       return this.exportType === "manual";
     },
@@ -124,8 +117,24 @@ export default {
     },
   },
   methods: {
+    updateCurrentTrack() {
+      const currentTrack =
+        this.exportType === "automatic" ? this.seratoTrack : this.manualTrack;
+
+      if (!currentTrack) {
+        return;
+      }
+
+      this.currentTrack = this.exportUsingUppercase
+        ? currentTrack.toUpperCase()
+        : currentTrack;
+
+      writeFile(storage.getSeratoNowPlayingFileLocation(), this.currentTrack);
+    },
     toggleExportUsingUppercase() {
       this.exportUsingUppercase = !this.exportUsingUppercase;
+      storage.setExportInUppercase(this.exportUsingUppercase);
+      this.updateCurrentTrack();
     },
     checkIsManual() {
       this.manualTrack = null;
@@ -134,18 +143,34 @@ export default {
         this.exportType === "manual" && this.$refs.manualInput.focus();
       }, 300);
     },
+    startCountdown() {
+      clearInterval(this.countdownInterval);
+      this.countdown = this.intervalTime / 1000 - 1;
+      this.countdownInterval = setInterval(() => this.countdown--, 1000);
+    },
+    async getTracknameFromSeratoLive() {
+      this.seratoTrack = await getLastTrackFromPlaylist(storage.getUsername());
+      this.updateCurrentTrack();
+      this.startCountdown();
+    },
     listen() {
-      this.countdown = 20;
       this.listening = true;
-      this.seratoTrack = "Track from - Serato Live Playlists";
+      this.countdown = this.intervalTime / 1000;
+      this.getTracknameFromSeratoLive();
+      this.interval = setInterval(
+        this.getTracknameFromSeratoLive,
+        this.intervalTime
+      );
     },
     stop() {
       this.listening = false;
       this.seratoTrack = null;
-      this.interval = null;
+      this.interval && clearInterval(this.interval);
+      this.countdownInterval && clearInterval(this.countdownInterval);
     },
     saveManualTrack() {
       this.manualTrack = this.$refs.manualInput.value;
+      this.updateCurrentTrack();
     },
   },
 };

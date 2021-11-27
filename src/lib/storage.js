@@ -1,5 +1,11 @@
 import Store from 'electron-store';
 
+const titleFileName = 'title.txt';
+const descriptionFileName = 'description.txt';
+const tagsFileName = 'tags.txt';
+const seratoNowPlayingFileName = 'serato-now-playing.txt';
+const defaultIntervalTime = 30;
+
 class Storage extends Store
 {
     getTemplates()
@@ -44,18 +50,36 @@ class Storage extends Store
     getSelectedTemplate()
     {
         const selectedTemplateId = this.get('selectedTemplateId');
-        const defaultMessage = 'No template selected';
 
-        return selectedTemplateId
-            ? this.getTemplates().find(t => t.id === selectedTemplateId)?.title || defaultMessage
-            : 'No template selected';
+        return selectedTemplateId && this.getTemplates().find(t => t.id === selectedTemplateId);
+    }
+
+    getSelectedTemplateTitle()
+    {
+        const template = this.getSelectedTemplate();
+        
+        return template?.title;
+    }
+
+    getSelectedTemplateDescription()
+    {
+        const template = this.getSelectedTemplate();
+        
+        return template?.description;
+    }
+
+    getSelectedTemplateTags()
+    {
+        const template = this.getSelectedTemplate();
+        
+        return template?.tags;
     }
 
     setSelectedTemplate(template)
     {
         this.set('selectedTemplateId', template.id);
 
-        return this.getSelectedTemplate();
+        return this;
     }
 
     getUsername()
@@ -87,6 +111,41 @@ class Storage extends Store
     {
         this.set('exportInUppercase', exportInUppercase);
     }
+
+    getUserPlaylistUrl()
+    {
+        return `https://serato.com/playlists/${this.getUsername()}/live`;
+    }
+
+    setIntervalTime(intervalTime)
+    {
+        this.set('intervalTime', intervalTime);
+    }
+
+    getIntervalTimeInMilliseconds()
+    {
+        return (this.get('intervalTime') || defaultIntervalTime) * 1000;
+    }
+
+    getTitleFileLocation()
+    {
+        return this.getFilesLocation() + '/' + titleFileName;
+    }
+
+    getDescriptionFileLocation()
+    {
+        return this.getFilesLocation() + '/' + descriptionFileName;
+    }
+
+    getTagsFileLocation()
+    {
+        return this.getFilesLocation() + '/' + tagsFileName;
+    }
+
+    getSeratoNowPlayingFileLocation()
+    {
+        return this.getFilesLocation() + '/' + seratoNowPlayingFileName;
+    }
 }
 
 const schema = {
@@ -104,7 +163,13 @@ const schema = {
 	},
 	exportInUppercase: {
 		type: 'boolean',
-	},
+    },
+    lastExportedTrackname: {
+		type: 'string',
+    },
+    intervalTime: {
+		type: 'number',
+    },
 };
 
 const storage = new Storage({ schema });

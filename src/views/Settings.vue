@@ -23,7 +23,12 @@
       </template>
     </alert>
 
-    <InputWithTitle title="Files location" v-model="filesLocation" />
+    <input-with-title-and-button
+      title="Files location"
+      v-model="filesLocation"
+      :onPress="selectLocation"
+      onPressText="Select"
+    />
 
     <alert type="alert-warning">
       <template v-slot:icon>
@@ -54,9 +59,17 @@ import { UserCircleIcon, FolderIcon } from "@heroicons/vue/solid";
 import InputWithTitle from "../components/inputs/InputWithTitle.vue";
 import Alert from "../components/containers/Alert.vue";
 import storage from "../lib/storage";
+import electron from "electron";
+import InputWithTitleAndButton from "../components/inputs/InputWithTitleAndButton.vue";
 
 export default {
-  components: { UserCircleIcon, FolderIcon, InputWithTitle, Alert },
+  components: {
+    UserCircleIcon,
+    FolderIcon,
+    InputWithTitle,
+    Alert,
+    InputWithTitleAndButton,
+  },
   watch: {
     username(value) {
       storage.setUsername(value);
@@ -70,6 +83,20 @@ export default {
       username: storage.getUsername(),
       filesLocation: storage.getFilesLocation(),
     };
+  },
+  methods: {
+    async selectLocation() {
+      const folder = await electron.ipcRenderer.invoke("showOpenDialog", {
+        properties: ["openDirectory"],
+      });
+
+      if (folder.canceled) {
+        return;
+      }
+
+      this.filesLocation = folder.filePaths[0];
+      storage.setFilesLocation(folder.filePaths[0]);
+    },
   },
 };
 </script>

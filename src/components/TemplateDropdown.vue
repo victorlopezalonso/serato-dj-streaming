@@ -34,18 +34,36 @@
 </template>
 
 <script>
+import { writeFile } from "../lib/filesystem";
 import storage from "../lib/storage";
 export default {
   data() {
     return {
-      selectedTemplate: storage.getSelectedTemplate(),
+      selectedTemplate: storage.getSelectedTemplateTitle(),
       templates: storage.getTemplates(),
     };
   },
   methods: {
+    updateFiles() {
+      writeFile(
+        storage.getTitleFileLocation(),
+        storage.getSelectedTemplateTitle("title")
+      );
+      writeFile(
+        storage.getDescriptionFileLocation(),
+        storage.getSelectedTemplateDescription()
+      );
+      writeFile(
+        storage.getTagsFileLocation(),
+        storage.getSelectedTemplateTags()
+      );
+    },
     selectTemplate(template) {
-      console.log(template);
-      this.selectedTemplate = storage.setSelectedTemplate(template);
+      this.selectedTemplate = storage
+        .setSelectedTemplate(template)
+        .getSelectedTemplateTitle();
+
+      this.updateFiles();
       this.$refs.hiddenfocus.focus();
     },
   },
