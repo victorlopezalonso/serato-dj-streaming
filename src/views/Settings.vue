@@ -53,13 +53,23 @@
 import { UserCircleIcon, FolderIcon } from "@heroicons/vue/solid";
 import InputWithTitle from "../components/inputs/InputWithTitle.vue";
 import Alert from "../components/containers/Alert.vue";
+import storage from "../lib/storage";
 
 export default {
   components: { UserCircleIcon, FolderIcon, InputWithTitle, Alert },
+  watch: {
+    username(value) {
+      console.log(value);
+      storage.setUsername(value);
+    },
+    filesLocation(value) {
+      storage.setFilesLocation(value);
+    },
+  },
   data() {
     return {
-      username: "Carl Cox",
-      filesLocation: "/Users/Carl Cox/OBS Files",
+      username: storage.username,
+      filesLocation: storage.getFilesLocation(),
     };
   },
 };

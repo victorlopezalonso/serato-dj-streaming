@@ -45,6 +45,40 @@ class Storage extends Store
         
         return this.saveTemplates();
     }
+
+    getUsername()
+    {
+        return this.get('username');
+    }
+
+    setUsername(username)
+    {
+        this.username = username;
+        this.set('username', username);
+    }
+
+    getFilesLocation()
+    {
+        return this.get('filesLocation');
+    }
+
+    setFilesLocation(filesLocation)
+    {
+        this.filesLocation = filesLocation;
+        this.set('filesLocation', filesLocation);
+    }
+
+    getExportInUppercase()
+    {
+        return this.get('exportInUppercase');
+    }
+
+    setExportInUppercase(exportInUppercase)
+    {
+        this.exportInUppercase = exportInUppercase;
+        this.set('exportInUppercase', exportInUppercase);
+    }
+
 }
 
 const schema = {
