@@ -5,6 +5,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 import "../src/lib/ipcHandler.js";
+import Store from 'electron-store';
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -44,6 +45,8 @@ async function createWindow() {
     e.preventDefault();
     shell.openExternal(url);
   });
+
+  Store.initRenderer();
 }
 
 // Quit when all windows are closed.

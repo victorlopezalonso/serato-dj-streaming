@@ -20,6 +20,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "daisyui": "^1.16.2",
+    "electron-store": "^8.0.1",
     "vue": "^3.0.0"
   },
   "devDependencies": {
