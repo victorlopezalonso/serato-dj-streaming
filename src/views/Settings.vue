@@ -59,7 +59,6 @@ export default {
   components: { UserCircleIcon, FolderIcon, InputWithTitle, Alert },
   watch: {
     username(value) {
-      console.log(value);
       storage.setUsername(value);
     },
     filesLocation(value) {
@@ -68,7 +67,7 @@ export default {
   },
   data() {
     return {
-      username: storage.username,
+      username: storage.getUsername(),
       filesLocation: storage.getFilesLocation(),
     };
   },

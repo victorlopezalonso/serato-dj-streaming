@@ -8,7 +8,7 @@
     <div class="dropdown w-full">
       <div tabindex="0" class="m-1 btn w-full">
         <span class="text-yellow-500">
-          {{ this.template?.title || "No template selected" }}</span
+          {{ this.selectedTemplate || "No template selected" }}</span
         >
       </div>
       <ul
@@ -34,19 +34,18 @@
 </template>
 
 <script>
+import storage from "../lib/storage";
 export default {
   data() {
     return {
-      template: null,
-      templates: [
-        { id: 1, title: "Morning Routine" },
-        { id: 2, title: "After Hours" },
-      ],
+      selectedTemplate: storage.getSelectedTemplate(),
+      templates: storage.getTemplates(),
     };
   },
   methods: {
     selectTemplate(template) {
-      this.template = template;
+      console.log(template);
+      this.selectedTemplate = storage.setSelectedTemplate(template);
       this.$refs.hiddenfocus.focus();
     },
   },

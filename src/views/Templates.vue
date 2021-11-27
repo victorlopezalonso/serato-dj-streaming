@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       template: null,
-      templates: storage.templates,
+      templates: storage.getTemplates(),
       showCreateTemplateModal: false,
     };
   },

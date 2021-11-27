@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import storage from "../lib/storage";
 import BoxAlert from "./containers/BoxAlert.vue";
 import Switch from "./inputs/Switch.vue";
 export default {
@@ -95,10 +96,15 @@ export default {
         },
         { value: "manual", class: "radio-accent", name: "Manual Input" },
       ],
-      exportUsingUppercase: true,
+      exportUsingUppercase: storage.getExportInUppercase(),
       countdown: 20,
       interval: null,
     };
+  },
+  watch: {
+    exportUsingUppercase(value) {
+      storage.setExportInUppercase(value);
+    },
   },
   computed: {
     currentTrack() {

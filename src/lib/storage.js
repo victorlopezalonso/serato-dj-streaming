@@ -2,48 +2,60 @@ import Store from 'electron-store';
 
 class Storage extends Store
 {
-    constructor(props)
+    getTemplates()
     {
-        super(props);
-        this.templates = this.get('templates') || [];
-        this.username = this.get('username');
-        this.filesLocation = this.get('filesLocation');
-        this.exportInUppercase = this.get('exportInUppercase');
+        return this.get('templates') || [];
     }
 
-    saveTemplates()
+    saveTemplates(templates)
     {
-        this.set('templates', this.templates);
-        return this.templates;
+        this.set('templates', templates);
+        
+        return this.getTemplates();
     }
 
     addTemplate(template)
     {
-        const lastId = this.templates.reduce((prev, current) => (prev.id > current.id) ? prev.id : current.id, 0);
+        const lastId = this.getTemplates().reduce((prev, current) => (prev.id > current.id) ? prev.id : current.id, 0);
         
-        this.templates = [
-            ...this.templates,
+        return this.saveTemplates([
+            ...this.getTemplates(),
             {...template, id: lastId + 1}
-        ];
-
-        return this.saveTemplates();
+        ]);
     }
 
     updateTemplate(template)
     {
-        this.templates = this.templates.map(t => ({
+        const templates = this.getTemplates().map(t => ({
             ...t,
             ...t.id === template.id && template
         }));
     
-        return this.saveTemplates();
+        return this.saveTemplates(templates);
     }
 
     deleteTemplate(template)
     {
-        this.templates = this.templates.filter(t => t.id !== template.id);
+        const templates = this.getTemplates().filter(t => t.id !== template.id);
         
-        return this.saveTemplates();
+        return this.saveTemplates(templates);
+    }
+
+    getSelectedTemplate()
+    {
+        const selectedTemplateId = this.get('selectedTemplateId');
+        const defaultMessage = 'No template selected';
+
+        return selectedTemplateId
+            ? this.getTemplates().find(t => t.id === selectedTemplateId)?.title || defaultMessage
+            : 'No template selected';
+    }
+
+    setSelectedTemplate(template)
+    {
+        this.set('selectedTemplateId', template.id);
+
+        return this.getSelectedTemplate();
     }
 
     getUsername()
@@ -53,7 +65,6 @@ class Storage extends Store
 
     setUsername(username)
     {
-        this.username = username;
         this.set('username', username);
     }
 
@@ -64,7 +75,6 @@ class Storage extends Store
 
     setFilesLocation(filesLocation)
     {
-        this.filesLocation = filesLocation;
         this.set('filesLocation', filesLocation);
     }
 
@@ -75,15 +85,16 @@ class Storage extends Store
 
     setExportInUppercase(exportInUppercase)
     {
-        this.exportInUppercase = exportInUppercase;
         this.set('exportInUppercase', exportInUppercase);
     }
-
 }
 
 const schema = {
+    selectedTemplateId: {
+        type: 'number'
+    },
 	templates: {
-		"type": "array",
+		type: 'array',
 	},
 	username: {
 		type: 'string',
@@ -96,6 +107,6 @@ const schema = {
 	},
 };
 
-const storage = new Storage({schema});
+const storage = new Storage({ schema });
 
 export default storage;
