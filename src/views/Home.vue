@@ -1,6 +1,6 @@
 <template>
-  <user-info />
   <template-dropdown />
+  <user-info />
   <current-track />
 </template>
 
