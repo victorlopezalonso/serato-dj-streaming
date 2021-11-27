@@ -6,14 +6,15 @@
 </template>
 
 <script>
+import storage from "../lib/storage";
 import InputWithTitle from "./inputs/InputWithTitle.vue";
 
 export default {
   components: { InputWithTitle },
   data() {
     return {
-      username: "Carl Cox",
-      filesLocation: "/Users/Carl Cox/OBS Files",
+      username: storage.getUsername(),
+      filesLocation: storage.getFilesLocation(),
     };
   },
   methods: {},
