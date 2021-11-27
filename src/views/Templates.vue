@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import storage from "./../lib/storage";
 import { PlusCircleIcon } from "@heroicons/vue/solid";
 import CreateTemplate from "../components/CreateTemplate.vue";
 import UpdateTemplate from "../components/UpdateTemplate.vue";
@@ -39,23 +40,8 @@ export default {
   data() {
     return {
       template: null,
+      templates: storage.templates,
       showCreateTemplateModal: false,
-      templates: [
-        {
-          id: 1,
-          title: "Morning Routine",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultrices lorem. Sed sollicitudin scelerisque lacinia. In a vehicula lacus, non fringilla libero.",
-          tags: "#techno #dark #progressive",
-        },
-        {
-          id: 2,
-          title: "After Hours",
-          description:
-            "Maecenas nec odio blandit quam lacinia eleifend. Sed tempor auctor convallis. Morbi est magna, commodo nec urna quis, sagittis viverra metus. Etiam quis erat et urna semper auctor. In eu mauris eleifend, convallis sem eget, facilisis nisi. Donec molestie nulla vel nisi mollis, vestibulum luctus velit consequat. Cras tristique viverra lectus vel malesuada. Vestibulum sagittis tempus eros sed ornare. Integer ut viverra eros, id porttitor nibh. ",
-          tags: "#techno #dark",
-        },
-      ],
     };
   },
   methods: {
@@ -72,29 +58,14 @@ export default {
       this.showCreateTemplateModal = false;
     },
     createTemplate(template) {
-      const lastId = this.templates.length
-        ? this.templates.sort((a, b) => b.id - a.id)[0].id
-        : 1;
-
-      this.templates.push({
-        id: lastId + 1,
-        ...template,
-      });
+      this.templates = storage.addTemplate(template);
     },
     updateTemplate(template) {
-      console.log(template);
-      this.templates = this.templates.map((t) => {
-        if (t.id === template.id) {
-          return template;
-        }
-
-        return t;
-      });
-
+      this.templates = storage.updateTemplate(template);
       this.clearTemplate();
     },
     deleteTemplate(template) {
-      this.templates = this.templates.filter((t) => t.id !== template.id);
+      this.templates = storage.deleteTemplate(template);
       this.clearTemplate();
     },
   },

@@ -14,37 +14,42 @@ class Storage extends Store
     saveTemplates()
     {
         this.set('templates', this.templates);
-        return this;
+        return this.templates;
     }
 
     addTemplate(template)
     {
-        this.templates = [...this.templates, template];
-        this.saveTemplates();
+        const lastId = this.templates.reduce((prev, current) => (prev.id > current.id) ? prev.id : current.id, 0);
+        
+        this.templates = [
+            ...this.templates,
+            {...template, id: lastId + 1}
+        ];
+
+        return this.saveTemplates();
     }
 
     updateTemplate(template)
     {
         this.templates = this.templates.map(t => ({
             ...t,
-            ...t.id === template.id && {template}
+            ...t.id === template.id && template
         }));
-        this.saveTemplates();
+    
+        return this.saveTemplates();
     }
 
     deleteTemplate(template)
     {
         this.templates = this.templates.filter(t => t.id !== template.id);
-        this.saveTemplates();
+        
+        return this.saveTemplates();
     }
 }
 
 const schema = {
 	templates: {
 		"type": "array",
-        "items": {
-            "type": "object"
-        }
 	},
 	username: {
 		type: 'string',
