@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/victorlopezalonso/serato-streaming/compare/v0.0.3...v0.0.4) (2021-11-28)
+
+
+### Features
+
+* add icon and change app name ([e3157fb](https://github.com/victorlopezalonso/serato-streaming/commit/e3157fbdc0345777aa9cd9dd24455141aeaec8e3))
+
 ### [0.0.3](https://github.com/victorlopezalonso/serato-streaming/compare/v0.0.2...v0.0.3) (2021-11-27)
 
 
