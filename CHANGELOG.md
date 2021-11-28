@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/victorlopezalonso/serato-streaming/compare/v0.0.4...v0.0.5) (2021-11-28)
+
+
+### Features
+
+* target AppImage on linux ([b895e24](https://github.com/victorlopezalonso/serato-streaming/commit/b895e245b053cede6207821161a239af678105ff))
+
 ### [0.0.4](https://github.com/victorlopezalonso/serato-streaming/compare/v0.0.3...v0.0.4) (2021-11-28)
 
 
