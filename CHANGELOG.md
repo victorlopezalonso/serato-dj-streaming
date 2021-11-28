@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/victorlopezalonso/serato-streaming/compare/v0.0.5...v0.0.6) (2021-11-28)
+
+
+### Features
+
+* add download page link to readme ([615b233](https://github.com/victorlopezalonso/serato-streaming/commit/615b23388af430d6ee4a1c2751b1284d7812c75f))
+
 ### [0.0.5](https://github.com/victorlopezalonso/serato-streaming/compare/v0.0.4...v0.0.5) (2021-11-28)
 
 
