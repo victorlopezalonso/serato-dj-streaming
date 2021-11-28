@@ -5,7 +5,17 @@ module.exports = {
       builderOptions: {
         publish: [{
           provider: 'github',
-        }]
+        }],
+        // mac: {
+        //   target: [{
+        //     target: 'dmg'
+        //   }],
+        // },
+        linux: {
+          target: [{
+            target: 'AppImage'
+          }]
+        }
       }
       }
   }
