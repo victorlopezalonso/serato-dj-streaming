@@ -1,4 +1,4 @@
-# Serato Streaming
+# Serato Dj Streaming
 
 If you are a streamer using `Serato DJ` you can use this app to show information about your set in every streaming software like `OBS` or `StreamLabs`.
 
