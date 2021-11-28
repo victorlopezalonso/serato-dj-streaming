@@ -164,7 +164,7 @@ export default {
     },
     stop() {
       this.listening = false;
-      this.seratoTrack = null;
+      this.currentTrack = null;
       this.interval && clearInterval(this.interval);
       this.countdownInterval && clearInterval(this.countdownInterval);
     },
