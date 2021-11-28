@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/victorlopezalonso/serato-dj-streaming/compare/v0.0.6...v0.0.7) (2021-11-28)
+
+
+### Bug Fixes
+
+* fix readme link ([ef073e7](https://github.com/victorlopezalonso/serato-dj-streaming/commit/ef073e7aedd412cd053f4134d18f248d5f018357))
+* use absolute path for releases page ([f6205a7](https://github.com/victorlopezalonso/serato-dj-streaming/commit/f6205a7fa31a6a12775e9077fd82b13750beab94))
+
 ### [0.0.6](https://github.com/victorlopezalonso/serato-streaming/compare/v0.0.5...v0.0.6) (2021-11-28)
 
 
