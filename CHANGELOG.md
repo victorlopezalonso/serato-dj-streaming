@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/victorlopezalonso/serato-dj-streaming/compare/v0.0.7...v0.0.8) (2021-11-28)
+
+
+### Bug Fixes
+
+* clear current track when the user stop listening ([2694e22](https://github.com/victorlopezalonso/serato-dj-streaming/commit/2694e221e9cd97ab6d1b491058fd8363777ff634))
+
 ### [0.0.7](https://github.com/victorlopezalonso/serato-dj-streaming/compare/v0.0.6...v0.0.7) (2021-11-28)
 
 
