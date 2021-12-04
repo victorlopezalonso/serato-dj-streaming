@@ -1,6 +1,6 @@
 # Serato Dj Streaming
 
-[![IMAGE ALT TEXT](https://img.youtube.com/vi/nw7c7B5-54Q/0.jpg)](https://www.youtube.com/watch?v=nw7c7B5-54Q "Serato Dj Streaming")
+[![Serato Dj Streaming](https://img.youtube.com/vi/nw7c7B5-54Q/0.jpg)](https://www.youtube.com/watch?v=nw7c7B5-54Q "Serato Dj Streaming")
 
 If you are a streamer using `Serato DJ` you can use this app to show information about your set in every streaming software like `OBS` or `StreamLabs`.
 
