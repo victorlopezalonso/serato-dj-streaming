@@ -111,16 +111,16 @@ export default {
   },
   methods: {
     updateCurrentTrack() {
-      const currentTrack =
+      let newTrack =
         this.exportType === "automatic" ? this.seratoTrack : this.manualTrack;
 
-      if (!currentTrack) {
+      newTrack = this.exportUsingUppercase ? newTrack?.toUpperCase() : newTrack;
+
+      if (!newTrack || this.currentTrack === newTrack) {
         return;
       }
 
-      this.currentTrack = this.exportUsingUppercase
-        ? currentTrack.toUpperCase()
-        : currentTrack;
+      this.currentTrack = newTrack;
 
       writeFile(storage.getSeratoNowPlayingFileLocation(), this.currentTrack);
       appendFile(storage.getPlaylistHistoryFileLocation(), this.currentTrack);
