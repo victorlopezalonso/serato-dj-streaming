@@ -16,11 +16,14 @@
 </template>
 
 <script>
+import { UserCircleIcon } from "@heroicons/vue/solid";
+
 export default {
   props: {
     title: String,
     type: { type: String, default: "alert-info" },
   },
+  components: { UserCircleIcon },
   data() {
     return {};
   },

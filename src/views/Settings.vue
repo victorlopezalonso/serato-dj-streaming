@@ -51,6 +51,12 @@
         </span>
       </template>
     </alert>
+
+    <Switch
+      text="Export filename using uppercase"
+      :checked="exportUsingUppercase"
+      @switch:changed="toggleExportUsingUppercase"
+    />
   </div>
 </template>
 
@@ -61,6 +67,7 @@ import Alert from "../components/containers/Alert.vue";
 import storage from "../lib/storage";
 import electron from "electron";
 import InputWithTitleAndButton from "../components/inputs/InputWithTitleAndButton.vue";
+import Switch from "../components/inputs/Switch.vue";
 
 export default {
   components: {
@@ -69,6 +76,7 @@ export default {
     InputWithTitle,
     Alert,
     InputWithTitleAndButton,
+    Switch,
   },
   watch: {
     username(value) {
@@ -82,6 +90,7 @@ export default {
     return {
       username: storage.getUsername(),
       filesLocation: storage.getFilesLocation(),
+      exportUsingUppercase: storage.getExportInUppercase(),
     };
   },
   methods: {
@@ -96,6 +105,10 @@ export default {
 
       this.filesLocation = folder.filePaths[0];
       storage.setFilesLocation(folder.filePaths[0]);
+    },
+    toggleExportUsingUppercase() {
+      this.exportUsingUppercase = !this.exportUsingUppercase;
+      storage.setExportInUppercase(this.exportUsingUppercase);
     },
   },
 };

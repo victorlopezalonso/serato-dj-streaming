@@ -10,11 +10,14 @@
 </template>
 
 <script>
+import { InformationCircleIcon } from "@heroicons/vue/solid";
+
 export default {
   props: {
     title: String,
     type: { type: String, default: "alert-info" },
   },
+  components: { InformationCircleIcon },
   data() {
     return {};
   },

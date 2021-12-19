@@ -1,8 +1,10 @@
 <template>
-  <navbar @tab-changed="changeTab" />
-  <home v-if="tab === 'home'" />
-  <templates v-if="tab === 'templates'" />
-  <settings v-if="tab === 'settings'" />
+  <div>
+    <navbar @tab-changed="changeTab" />
+    <home v-show="tab === 'home'" />
+    <templates v-show="tab === 'templates'" />
+    <settings v-show="tab === 'settings'" />
+  </div>
 </template>
 
 <script>

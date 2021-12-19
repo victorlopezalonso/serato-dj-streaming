@@ -1,4 +1,6 @@
 import Store from 'electron-store';
+import { readFile } from './filesystem';
+import { dateToString } from './strings';
 
 const titleFileName = 'title.txt';
 const descriptionFileName = 'description.txt';
@@ -145,6 +147,24 @@ class Storage extends Store
     getSeratoNowPlayingFileLocation()
     {
         return this.getFilesLocation() + '/' + seratoNowPlayingFileName;
+    }
+
+    getPlaylistHistoryFileLocation()
+    {
+        return this.getFilesLocation() + '/' + this.getSelectedTemplateTitle() + '-' + dateToString() + '.txt';
+    }
+
+    getCurrentPlaylist() {
+        const file = readFile(this.getPlaylistHistoryFileLocation());
+  
+        if (!file) {
+            return null;
+        }
+
+        return file.match(/[^\r\n]+/g).map((line) => {
+          const [artist, title] = line.split(" - ");
+          return { artist, title };
+        });
     }
 }
 

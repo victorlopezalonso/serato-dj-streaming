@@ -1,6 +1,23 @@
 <template>
   <div class="shadow-2xl m-2 p-2 rounded-box">
-    <div class="p-6 card border-2 border-gray-500">
+    <div class="mb-4">
+      <button
+        v-if="!playlistStarted"
+        class="btn btn-primary w-full"
+        @click="startPlaylist"
+      >
+        Start playlist
+      </button>
+      <button
+        v-if="playlistStarted"
+        class="btn btn-secondary w-full"
+        @click="endPlaylist"
+      >
+        End playlist
+      </button>
+    </div>
+
+    <div v-if="playlistStarted" class="p-6 card border-2 border-gray-500">
       <div class="form-control" v-for="(type, key) in exportTypes" :key="key">
         <label class="cursor-pointer label" @click="checkIsManual">
           <span class="label-text text-lg font-semibold">{{ type.name }}</span>
@@ -13,15 +30,6 @@
             v-model="exportType"
           />
         </label>
-      </div>
-
-      <div class="mt-4" v-if="exportType === 'automatic'">
-        <button v-if="!listening" class="btn btn-primary" @click="listen">
-          Start listening from Serato Live Playlists
-        </button>
-        <button v-if="listening" class="btn btn-secondary" @click="stop">
-          Stop listening from Serato Live Playlists
-        </button>
       </div>
 
       <div class="form-control" v-if="exportType === 'manual'">
@@ -46,48 +54,33 @@
           </button>
         </div>
       </div>
-    </div>
 
-    <Switch
-      text="Export filename using uppercase"
-      :checked="exportUsingUppercase"
-      @switch:changed="toggleExportUsingUppercase"
-    />
-
-    <BoxAlert v-if="currentTrack">
-      Current track:
-      <span
-        :class="{
-          'text-green-500': isManual,
-          'text-purple-400': isAutomatic,
-        }"
-        >{{ currentTrack }}</span
+      <div
+        v-if="listening"
+        class="p-4 mt-4 w-full text-right flex items-center justify-end"
       >
-    </BoxAlert>
-
-    <div
-      v-if="listening"
-      class="p-4 mt-4 w-full text-right flex items-center justify-end"
-    >
-      <label class="font-medium"> Seconds to reload the track </label>
-      <span class="font-mono text-6xl countdown">
-        <span :style="`--value: ${countdown}`"></span>
-      </span>
+        <label class="font-medium"> Seconds to reload the track </label>
+        <span class="font-mono text-6xl countdown">
+          <span :style="`--value: ${countdown}`"></span>
+        </span>
+      </div>
     </div>
   </div>
+  <playlist-history v-if="playlistStarted" :currentTrack="currentTrack" />
 </template>
 
 <script>
 import storage from "../lib/storage";
-import BoxAlert from "./containers/BoxAlert.vue";
-import Switch from "./inputs/Switch.vue";
 import { getLastTrackFromPlaylist } from "../lib/serato";
-import { writeFile } from "../lib/filesystem";
+import { appendFile, writeFile } from "../lib/filesystem";
+import PlaylistHistory from "./PlaylistHistory.vue";
 
 export default {
-  components: { Switch, BoxAlert },
+  components: { PlaylistHistory },
+  emits: ["playlist-started", "playlist-updated", "playlist-ended"],
   data() {
     return {
+      playlistStarted: false,
       listening: false,
       seratoTrack: null,
       manualTrack: null,
@@ -130,17 +123,15 @@ export default {
         : currentTrack;
 
       writeFile(storage.getSeratoNowPlayingFileLocation(), this.currentTrack);
-    },
-    toggleExportUsingUppercase() {
-      this.exportUsingUppercase = !this.exportUsingUppercase;
-      storage.setExportInUppercase(this.exportUsingUppercase);
-      this.updateCurrentTrack();
+      appendFile(storage.getPlaylistHistoryFileLocation(), this.currentTrack);
+      this.$emit("playlist-updated");
     },
     checkIsManual() {
       this.manualTrack = null;
       this.stop();
       setTimeout(() => {
         this.exportType === "manual" && this.$refs.manualInput.focus();
+        this.exportType === "automatic" && this.listen();
       }, 300);
     },
     startCountdown() {
@@ -171,6 +162,16 @@ export default {
     saveManualTrack() {
       this.manualTrack = this.$refs.manualInput.value;
       this.updateCurrentTrack();
+    },
+    startPlaylist() {
+      this.checkIsManual();
+      this.playlistStarted = true;
+      this.$emit("playlist-started");
+    },
+    endPlaylist() {
+      this.stop();
+      this.playlistStarted = false;
+      this.$emit("playlist-ended");
     },
   },
 };

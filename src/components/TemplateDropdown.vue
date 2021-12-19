@@ -1,17 +1,20 @@
 <template>
   <div class="shadow-2xl m-2 p-2 rounded-box">
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text text-lg font-semibold">Template</span>
-      </label>
-    </div>
-    <div class="dropdown w-full">
+    <div
+      :data-tip="
+        lock
+          ? 'you need to stop the current playlist'
+          : 'click to change your template'
+      "
+      class="dropdown w-full tooltip tooltip-bottom tooltip-secondary text-left"
+    >
       <div tabindex="0" class="m-1 btn w-full">
         <span class="text-yellow-500">
           {{ this.selectedTemplate || "No template selected" }}</span
         >
       </div>
       <ul
+        v-show="!lock"
         tabindex="0"
         class="
           p-2
@@ -37,6 +40,9 @@
 import { writeFile } from "../lib/filesystem";
 import storage from "../lib/storage";
 export default {
+  props: {
+    lock: Boolean,
+  },
   data() {
     return {
       selectedTemplate: storage.getSelectedTemplateTitle(),
