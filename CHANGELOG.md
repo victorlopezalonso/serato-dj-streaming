@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/victorlopezalonso/serato-dj-streaming/compare/v0.0.8...v0.0.9) (2021-12-19)
+
+
+### Features
+
+* Save playlists to txt files ([760bb85](https://github.com/victorlopezalonso/serato-dj-streaming/commit/760bb8569dfb97036e6c5cb27927ac7f790c1bd2))
+
 ### [0.0.8](https://github.com/victorlopezalonso/serato-dj-streaming/compare/v0.0.7...v0.0.8) (2021-11-28)
 
 
